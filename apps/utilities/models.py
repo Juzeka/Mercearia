@@ -15,3 +15,21 @@ class CriadoAlteradoEm(models.Model):
         editable=False,
         verbose_name='Alterado em'
     )
+
+
+class NomeDescricao(models.Model):
+    class Meta:
+        abstract = True
+
+    nome = models.CharField(
+        max_length=200,
+        blank=False,
+        null=False,
+        verbose_name='Nome'
+    )
+    descricao = models.CharField(
+        max_length=300,
+        blank=True,
+        null=True,
+        verbose_name='Descrição'
+    )
