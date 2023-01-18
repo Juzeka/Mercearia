@@ -7,7 +7,9 @@ class ProdutoOrigemFactory(DjangoModelFactory):
     class Meta:
         model = ProdutoOrigem
 
+    nome = Sequence(lambda n: 'Produto %d' % n)
 
-class ProdutoFactory(DjangoModelFactory):
+
+class ProdutoFactory(ProdutoOrigemFactory):
     class Meta:
         model = Produto
