@@ -1,20 +1,12 @@
-from utilities.models import models, CriadoAlteradoEm
+from utilities.models import models, CriadoAlteradoEm, NomeDescricao
 
 
-class ProdutoOrigem(CriadoAlteradoEm):
-    nome = models.CharField(
-        max_length=200,
-        blank=False,
-        null=False,
-        verbose_name='Nome'
+class ProdutoOrigem(CriadoAlteradoEm, NomeDescricao):
+    categoria = models.ForeignKey(
+        'produtos.Categoria',
+        on_delete=models.PROTECT,
+        verbose_name='Categoria'
     )
-    descricao = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True,
-        verbose_name='Descrição'
-    )
-    #categoria
     valor = models.DecimalField(
         max_digits=5,
         decimal_places=2,
