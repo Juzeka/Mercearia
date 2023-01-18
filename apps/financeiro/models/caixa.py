@@ -8,6 +8,13 @@ class Caixa(CriadoAlteradoEm):
         on_delete=models.PROTECT,
         verbose_name='Usuário'
     )
+    vendas = models.ManyToManyField(
+        'financeiro.Venda',
+        blank=True,
+        null=True,
+        related_name='caixa_vendas',
+        verbose_name='Vendas'
+    )
     sangrias = models.ManyToManyField(
         'financeiro.Sangria',
         blank=True,
@@ -24,4 +31,10 @@ class Caixa(CriadoAlteradoEm):
     def __str__(self):
         return f'{self.usuario} - {self.criado_em}'
 
-    # Property total e qntd_vendas
+    @property
+    def qntd_vendas(self):
+        return self.caixa_vendas.count()
+
+    @property
+    def total(self):
+        ...

@@ -3,11 +3,6 @@ from utilities.choices import FORMA_PAGAMENTO_CHOICES
 
 
 class Venda(CriadoAlteradoEm):
-    caixa = models.ForeignKey(
-        'financeiro.Caixa',
-        on_delete=models.PROTECT,
-        verbose_name='Caixa'
-    )
     produtos = models.ManyToManyField(
         'produtos.Produto',
         related_name='venda_produtos',
