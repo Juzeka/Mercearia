@@ -15,3 +15,6 @@ class Sangria(CriadoAlteradoEm):
         null=True,
         verbose_name='Descrição'
     )
+
+    def __str__(self):
+        return f'{self.valor}'

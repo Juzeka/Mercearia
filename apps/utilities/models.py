@@ -33,3 +33,6 @@ class NomeDescricao(models.Model):
         null=True,
         verbose_name='Descrição'
     )
+
+    def __str__(self):
+        return self.nome
