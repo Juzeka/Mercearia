@@ -29,6 +29,10 @@ INSTALLED_APPS = [
     'utilities',
 ]
 
+INSTALLED_APPS += [
+    'produtos',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
