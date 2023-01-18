@@ -30,6 +30,7 @@ INSTALLED_APPS = [
 ]
 
 INSTALLED_APPS += [
+    'financeiro',
     'produtos',
 ]
 
