@@ -1,4 +1,5 @@
 from utilities.models import models, CriadoAlteradoEm, NomeDescricao
+from utilities.validators import numero_positivo
 
 
 class ProdutoOrigem(CriadoAlteradoEm, NomeDescricao):
@@ -10,14 +11,13 @@ class ProdutoOrigem(CriadoAlteradoEm, NomeDescricao):
     valor = models.DecimalField(
         max_digits=5,
         decimal_places=2,
-        blank=True,
-        null=True,
         verbose_name='Valor'
     )
     quantidade = models.IntegerField(
         blank=True,
         null=True,
         default=0,
+        validators=[numero_positivo],
         verbose_name='Quantidade'
     )
     ativo = models.BooleanField(
