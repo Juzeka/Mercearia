@@ -9,5 +9,5 @@ class ProdutoOrigemSerializer(serializers.ModelSerializer):
 
 
 class ProdutoSerializer(ProdutoOrigemSerializer):
-    class Meta:
+    class Meta(ProdutoOrigemSerializer.Meta):
         model = Produto
