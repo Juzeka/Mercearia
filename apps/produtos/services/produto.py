@@ -1,3 +1,9 @@
+from apps.produtos.serializers import (
+    ProdutoSerializer,
+    ProdutoOrigemSerializer
+)
+
+
 class ProdutoServices:
     def __init__(self, *args, **kwargs):
         self.data = kwargs.get('data')
@@ -10,3 +16,16 @@ class ProdutoServices:
         serializer.save()
 
         return serializer
+
+    def create_produto_com_origem(self):
+        self.serializer = ProdutoOrigemSerializer
+        origem = self.serialize_and_save()
+
+        data = self.data.copy()
+        data.update({'origem': origem.instance.pk})
+        self.data = data
+
+        self.serializer = ProdutoSerializer
+        self.serialize_and_save()
+
+        return origem.data
