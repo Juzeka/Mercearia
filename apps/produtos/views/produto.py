@@ -16,22 +16,9 @@ class ProdutoViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         origem = self.class_services(
-            data=request.data,
-            serializer=self.serializer_class
-        ).serialize_and_save()
+            data=request.data
+        ).create_produto_com_origem()
 
-        data = request.data.copy()
-        data.update({'origem': origem.instance.pk})
+        headers = self.get_success_headers(origem)
 
-        serializer = self.class_services(
-            data=data,
-            serializer=ProdutoSerializer
-        ).serialize_and_save()
-
-        headers = self.get_success_headers(serializer.data)
-
-        return Response(
-            serializer.data,
-            status=HTTP_201_CREATED,
-            headers=headers
-        )
+        return Response(origem, status=HTTP_201_CREATED, headers=headers)
