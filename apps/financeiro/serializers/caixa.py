@@ -6,3 +6,4 @@ class CaixaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Caixa
         fields = '__all__'
+        depth = 2
