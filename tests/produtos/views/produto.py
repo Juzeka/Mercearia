@@ -4,8 +4,12 @@ from rest_framework.status import (
     HTTP_201_CREATED,
     HTTP_400_BAD_REQUEST
 )
-from apps.produtos.models import Produto
-from apps.produtos.factories import ProdutoFactory, CategoriaFactory
+from apps.produtos.models import ProdutoOrigem
+from apps.produtos.factories import (
+    CategoriaFactory,
+    ProdutoFactory,
+    ProdutoOrigemFactory
+)
 from parameterized import parameterized
 
 
@@ -50,8 +54,8 @@ DATA_IN_ERROR = [
 
 
 class ProdutoViewSetTestCase(TestCase):
-    class_model = Produto
-    class_factory = ProdutoFactory
+    class_model = ProdutoOrigem
+    class_factory = ProdutoOrigemFactory
     class_router = '/api/produtos/'
 
     def setUp(self):
