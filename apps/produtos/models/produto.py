@@ -31,5 +31,6 @@ class Produto(ProdutoOrigem):
     origem = models.ForeignKey(
         ProdutoOrigem,
         on_delete=models.PROTECT,
+        related_name='produto_origem',
         verbose_name='Produto de origem',
     )
