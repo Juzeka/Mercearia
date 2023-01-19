@@ -1,2 +1,2 @@
 from .categoria import CategoriaFactory
-from .produto import ProdutoFactory
+from .produto import ProdutoFactory, ProdutoOrigemFactory
