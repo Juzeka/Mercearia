@@ -5,8 +5,9 @@ from apps.produtos.serializers import (
 )
 from apps.produtos.factories import CategoriaFactory, ProdutoOrigemFactory
 from apps.produtos.services import ProdutoServices
-from apps.produtos.models import ProdutoOrigem
+from apps.produtos.models import ProdutoOrigem, Produto
 from parameterized import parameterized
+from rest_framework.utils.serializer_helpers import ReturnDict
 
 
 DATA_AND_SERIALIZER = [
@@ -15,15 +16,15 @@ DATA_AND_SERIALIZER = [
             'nome': 'Sonete Líquido',
             'descricao': 'líquido para lavar corpo.',
             'valor': 2.5,
-            'quantidade': 200,
+            'quantidade': 400,
         },
         ProdutoOrigemSerializer
     ),
     (
         {
-            'nome': 'Sonete Líquido',
-            'descricao': 'líquido para lavar corpo.',
-            'valor': 2.5,
+            'nome': 'Shampoo Líquido',
+            'descricao': 'líquido para lavar cabelos.',
+            'valor': 25.5,
             'quantidade': 200,
             'origem': True
         },
@@ -62,3 +63,20 @@ class ProdutoServicesTestCase(TestCase):
         self.assertIsInstance(response, ProdutoOrigemSerializer)
         self.assertIsInstance(response.instance, ProdutoOrigem)
         self.assertTrue(is_exists)
+
+    def test_criar_produto_com_origem(self):
+        data = {
+            'nome': 'Água sanitária',
+            'descricao': 'líquido para lavar o chão.',
+            'categoria': self.categoria.pk,
+            'valor': 5.5,
+            'quantidade': 500,
+        }
+
+        response = self.class_services(data=data).create_produto_com_origem()
+
+        origem = ProdutoOrigem.objects.filter(**data).exists()
+        produto = Produto.objects.filter(**data).exists()
+
+        self.assertEqual(origem, produto)
+        self.assertIsInstance(response, ReturnDict)
