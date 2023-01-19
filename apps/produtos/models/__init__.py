@@ -1,2 +1,2 @@
-from .produto import ProdutoOrigem, Produto
-from .categoria import Categoria
+from produtos.models.categoria import Categoria
+from produtos.models.produto import ProdutoOrigem, Produto
