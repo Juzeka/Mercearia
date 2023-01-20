@@ -6,7 +6,7 @@ from apps.produtos.views import ProdutoViewSet, CategoriaViewSet
 routers = SimpleRouter()
 
 routers.register(r'produtos', ProdutoViewSet, basename='produtos')
-routers.register(r'produtos/categorias', CategoriaViewSet, basename='categorias')
+routers.register(r'categorias', CategoriaViewSet, basename='categorias')
 
 urlpatterns = [
     path('api/', include(routers.urls), name='api'),
