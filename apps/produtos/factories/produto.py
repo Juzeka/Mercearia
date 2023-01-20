@@ -8,6 +8,7 @@ class ProdutoOrigemFactory(DjangoModelFactory):
         model = ProdutoOrigem
 
     nome = Sequence(lambda n: 'Produto %d' % n)
+    descricao = Sequence(lambda n: 'descricao %d' % n)
 
 
 class ProdutoFactory(ProdutoOrigemFactory):
