@@ -4,7 +4,7 @@ from rest_framework.status import (
     HTTP_201_CREATED,
     HTTP_400_BAD_REQUEST
 )
-from apps.produtos.models import ProdutoOrigem
+from apps.produtos.models import ProdutoOrigem, Produto
 from apps.produtos.factories import (
     CategoriaFactory,
     ProdutoFactory,
@@ -60,9 +60,7 @@ class ProdutoViewSetTestCase(TestCase):
 
     def setUp(self):
         self.categoria = CategoriaFactory()
-
-    def test_criar_produto(self):
-        data = {
+        self.data = {
             'nome': 'Detergente Líquido',
             'descricao': 'Detergente líquido para lavar louças mais pesadas.',
             'categoria': self.categoria.pk,
@@ -70,7 +68,8 @@ class ProdutoViewSetTestCase(TestCase):
             'quantidade': 200,
         }
 
-        response = self.client.post(self.class_router, data)
+    def test_criar_produto(self):
+        response = self.client.post(self.class_router, self.data)
 
         expected = {
             'nome': response.data.get('nome'),
@@ -81,7 +80,7 @@ class ProdutoViewSetTestCase(TestCase):
         }
 
         self.assertEqual(response.status_code, HTTP_201_CREATED)
-        self.assertEqual(data, expected)
+        self.assertEqual(self.data, expected)
 
     @parameterized.expand(DATA_IN_ERROR)
     def test_criar_produto_sem_campos_obrigatorios(self, data, data_error):
@@ -92,3 +91,30 @@ class ProdutoViewSetTestCase(TestCase):
 
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST)
         self.assertEqual(data_error.get('msg'), msg)
+
+    def test_editar_produto_origem_sem_alterar_valor_do_produto(self):
+        data = self.data
+
+        data_edit = data.copy()
+        data_edit.update({'nome': 'Líquido', 'valor': 50.0})
+        data.update({'categoria': self.categoria})
+
+        origem = self.class_factory(**data)
+        data.update({'origem': origem})
+
+        produto = ProdutoFactory(**data)
+
+        response = self.client.put(
+            f'{self.class_router}{origem.pk}/',
+            data=data_edit,
+            content_type='application/json'
+        )
+
+        produto_edit = Produto.objects.filter(pk=produto.pk).first()
+        origem_edit = ProdutoOrigem.objects.filter(pk=origem.pk).first()
+
+        self.assertEqual(response.status_code, HTTP_200_OK)
+        self.assertNotEqual(produto.nome, produto_edit.nome)
+        self.assertNotEqual(origem.nome, origem_edit.nome)
+        self.assertEqual(produto.valor, produto_edit.valor)
+        self.assertNotEqual(origem.valor, origem_edit.valor)
