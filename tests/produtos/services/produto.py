@@ -92,8 +92,9 @@ class ProdutoServicesTestCase(TestCase):
 
         data.update({'categoria':self.categoria})
         origem = ProdutoOrigemFactory(**data)
-        data.update({'categoria':self.categoria.pk})
+        produto_origem = ProdutoOrigem.objects.get(pk=origem.pk)
 
+        data.update({'categoria':self.categoria.pk})
 
         serializer = ProdutoOrigemSerializer(origem, data=data_edit)
         serializer.is_valid(raise_exception=True)
@@ -102,13 +103,44 @@ class ProdutoServicesTestCase(TestCase):
         produto = ProdutoFactory(**data)
         data.update({'categoria': self.categoria.pk, 'origem': origem.pk})
 
-        self.class_services(
+        instances = self.class_services(
             data=data_edit,
             serializer=serializer,
             origem=origem.pk
         ).update_partial_in_produto()
 
-        produto_edit = Produto.objects.filter(pk=produto.pk).first()
+        produto_edit = instances.get('produto', False)
 
-        self.assertNotEqual(produto.nome, produto_edit.nome)
-        self.assertEqual(produto.valor, produto_edit.valor)
+        self.assertTrue(instances.get('origem', False))
+        self.assertTrue(produto_edit)
+        self.assertNotEqual(produto_origem.nome, origem.nome)
+        self.assertNotEqual(produto_origem.valor, origem.valor)
+        self.assertNotEqual(produto_edit.nome, produto.nome)
+        self.assertEqual(produto_edit.valor, produto.valor)
+
+    def test_editar_parcialmente_o_produto_origem_quando_nao_tem_produto(self):
+        data = self.data.copy()
+
+        data_edit = data.copy()
+        data_edit.update({'nome':'liquido', 'valor': 30.5})
+
+        data.update({'categoria':self.categoria})
+
+        origem = ProdutoOrigemFactory(**data)
+        produto_origem = ProdutoOrigem.objects.get(pk=origem.pk)
+
+        data.update({'categoria':self.categoria.pk})
+
+        serializer = ProdutoOrigemSerializer(origem, data=data_edit)
+        serializer.is_valid(raise_exception=True)
+
+        instances = self.class_services(
+            data=data_edit,
+            serializer=serializer,
+            origem=origem.pk
+        ).update_partial_in_produto()
+
+        self.assertTrue(instances.get('origem', False))
+        self.assertFalse(instances.get('produto', False))
+        self.assertNotEqual(produto_origem.nome, origem.nome)
+        self.assertNotEqual(produto_origem.valor, origem.valor)
