@@ -112,7 +112,7 @@ class ProdutoViewSetTestCase(TestCase):
         )
 
         produto_edit = Produto.objects.filter(pk=produto.pk).first()
-        origem_edit = ProdutoOrigem.objects.filter(pk=origem.pk).first()
+        origem_edit = self.class_model.objects.filter(pk=origem.pk).first()
 
         self.assertEqual(response.status_code, HTTP_200_OK)
         self.assertNotEqual(produto.nome, produto_edit.nome)
@@ -129,13 +129,13 @@ class ProdutoViewSetTestCase(TestCase):
             'quantidade': 200,
         }
 
-        origem = ProdutoOrigemFactory(**data)
+        origem = self.class_factory(**data)
         data.update({'origem': origem})
         produto = ProdutoFactory(**data)
 
         response = self.client.delete(f'{self.class_router}{origem.pk}/')
 
-        instance_origem = ProdutoOrigem.objects.filter(pk=origem.pk)
+        instance_origem = self.class_model.objects.filter(pk=origem.pk)
         instance_produto = Produto.objects.filter(pk=produto.pk)
 
         self.assertEqual(response.status_code, HTTP_204_NO_CONTENT)
@@ -144,7 +144,7 @@ class ProdutoViewSetTestCase(TestCase):
 
     @parameterized.expand(QNTD_PRODUTOS)
     def test_listar_produtos(self, qntd_produtos, qntd):
-        origens = ProdutoOrigemFactory.create_batch(
+        origens = self.class_factory.create_batch(
             size=qntd_produtos,
             categoria=self.categoria,
             quantidade=qntd
