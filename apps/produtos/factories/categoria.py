@@ -8,3 +8,4 @@ class CategoriaFactory(DjangoModelFactory):
         model = Categoria
 
     nome = Sequence(lambda n: 'Categoria %d' % n)
+    descricao = Sequence(lambda n: 'Descrição %d' % n)
