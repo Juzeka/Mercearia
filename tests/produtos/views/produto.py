@@ -2,6 +2,7 @@ from django.test import TestCase
 from rest_framework.status import (
     HTTP_200_OK,
     HTTP_201_CREATED,
+    HTTP_204_NO_CONTENT,
     HTTP_400_BAD_REQUEST
 )
 from apps.produtos.models import ProdutoOrigem, Produto
@@ -118,3 +119,25 @@ class ProdutoViewSetTestCase(TestCase):
         self.assertNotEqual(origem.nome, origem_edit.nome)
         self.assertEqual(produto.valor, produto_edit.valor)
         self.assertNotEqual(origem.valor, origem_edit.valor)
+
+    def test_excluir_produto_origem_sem_afetar_produto_vinculado(self):
+        data = {
+            'nome': 'Biscoito Maria',
+            'descricao': 'Biscoito de agua e sal',
+            'categoria': self.categoria,
+            'valor': 2.50,
+            'quantidade': 200,
+        }
+
+        origem = ProdutoOrigemFactory(**data)
+        data.update({'origem': origem})
+        produto = ProdutoFactory(**data)
+
+        response = self.client.delete(f'{self.class_router}{origem.pk}/')
+
+        instance_origem = ProdutoOrigem.objects.filter(pk=origem.pk)
+        instance_produto = Produto.objects.filter(pk=produto.pk)
+
+        self.assertEqual(response.status_code, HTTP_204_NO_CONTENT)
+        self.assertFalse(instance_origem.exists())
+        self.assertTrue(instance_produto.exists())

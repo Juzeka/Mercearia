@@ -29,4 +29,3 @@ class ProdutoViewSet(ModelViewSet):
             serializer=serializer,
             origem=self.get_object().pk
         ).update_partial_in_produto()
-
