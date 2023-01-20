@@ -9,6 +9,8 @@ class ProdutoOrigemFactory(DjangoModelFactory):
 
     nome = Sequence(lambda n: 'Produto %d' % n)
     descricao = Sequence(lambda n: 'descricao %d' % n)
+    valor = Sequence(lambda n: n)
+    quantidade = Sequence(lambda n: n)
 
 
 class ProdutoFactory(ProdutoOrigemFactory):

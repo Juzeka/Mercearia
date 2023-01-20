@@ -52,7 +52,7 @@ DATA_IN_ERROR = [
         }
     )
 ]
-
+QNTD_PRODUTOS = [(1, 54),(10, 500),(100, 140),(500, 233),]
 
 class ProdutoViewSetTestCase(TestCase):
     class_model = ProdutoOrigem
@@ -94,7 +94,7 @@ class ProdutoViewSetTestCase(TestCase):
         self.assertEqual(data_error.get('msg'), msg)
 
     def test_editar_produto_origem_sem_alterar_valor_do_produto(self):
-        data = self.data
+        data = self.data.copy()
 
         data_edit = data.copy()
         data_edit.update({'nome': 'Líquido', 'valor': 50.0})
@@ -141,3 +141,16 @@ class ProdutoViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, HTTP_204_NO_CONTENT)
         self.assertFalse(instance_origem.exists())
         self.assertTrue(instance_produto.exists())
+
+    @parameterized.expand(QNTD_PRODUTOS)
+    def test_listar_produtos(self, qntd_produtos, qntd):
+        origens = ProdutoOrigemFactory.create_batch(
+            size=qntd_produtos,
+            categoria=self.categoria,
+            quantidade=qntd
+        )
+
+        response = self.client.get(self.class_router)
+
+        self.assertEqual(response.status_code, HTTP_200_OK)
+        self.assertEqual(qntd_produtos,len(response.data))
