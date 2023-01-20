@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import Response
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED
-from ..serializers import ProdutoSerializer, ProdutoOrigemSerializer
+from ..serializers import ProdutoOrigemSerializer
 from ..models import ProdutoOrigem
 from ..services import ProdutoServices
 
@@ -22,3 +22,11 @@ class ProdutoViewSet(ModelViewSet):
         headers = self.get_success_headers(origem)
 
         return Response(origem, status=HTTP_201_CREATED, headers=headers)
+
+    def perform_update(self, serializer):
+        self.class_services(
+            data=self.request.data,
+            serializer=serializer,
+            origem=self.get_object().pk
+        ).update_partial_in_produto()
+
