@@ -3,6 +3,6 @@ from ..serializers import CategoriaSerializer
 from ..models import Categoria
 
 
-class ProdutoViewSet(ModelViewSet):
+class CategoriaViewSet(ModelViewSet):
     serializer_class = CategoriaSerializer
     class_model = Categoria
