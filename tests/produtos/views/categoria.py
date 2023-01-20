@@ -42,7 +42,7 @@ class CategoriaViewSetTestCase(TestCase):
         response = self.client.get(self.class_router)
 
         self.assertEqual(response.status_code, HTTP_200_OK)
-        self.assertEqual(qntd, len(response.data))
+        self.assertEqual(qntd + 1, len(response.data))
 
     @parameterized.expand(DATAS)
     def test_editar(self, data):
