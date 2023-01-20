@@ -33,13 +33,22 @@ class ProdutoServices:
         return origem.data
 
     def update_partial_in_produto(self):
+        instances = {}
         data = self.data.copy()
         data.pop('valor')
 
-        instance = Produto.objects.filter(origem=self.origem).first()
+        instance = Produto.objects.filter(origem=self.origem)
 
-        produto = ProdutoSerializer(instance, data=data, partial=True)
-        produto.is_valid(raise_exception=True)
+        if instance.exists():
+            instance = instance.first()
+
+            produto = ProdutoSerializer(instance, data=data, partial=True)
+            produto.is_valid(raise_exception=True)
+
+            produto.save()
+            instances.update({'produto': produto.instance})
 
         self.serializer.save()
-        produto.save()
+        instances.update({'origem': self.serializer.instance})
+
+        return instances
