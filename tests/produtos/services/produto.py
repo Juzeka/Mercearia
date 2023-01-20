@@ -3,7 +3,11 @@ from apps.produtos.serializers import (
     ProdutoOrigemSerializer,
     ProdutoSerializer
 )
-from apps.produtos.factories import CategoriaFactory, ProdutoOrigemFactory
+from apps.produtos.factories import (
+    CategoriaFactory,
+    ProdutoOrigemFactory,
+    ProdutoFactory
+)
 from apps.produtos.services import ProdutoServices
 from apps.produtos.models import ProdutoOrigem, Produto
 from parameterized import parameterized
@@ -38,6 +42,13 @@ class ProdutoServicesTestCase(TestCase):
 
     def setUp(self):
         self.categoria = CategoriaFactory()
+        self.data = {
+            'nome': 'Água sanitária',
+            'descricao': 'líquido para lavar o chão.',
+            'categoria': self.categoria.pk,
+            'valor': 5.5,
+            'quantidade': 500,
+        }
 
     @parameterized.expand(DATA_AND_SERIALIZER)
     def test_serializar_e_salvar(self, data, serializer):
@@ -65,18 +76,39 @@ class ProdutoServicesTestCase(TestCase):
         self.assertTrue(is_exists)
 
     def test_criar_produto_com_origem(self):
-        data = {
-            'nome': 'Água sanitária',
-            'descricao': 'líquido para lavar o chão.',
-            'categoria': self.categoria.pk,
-            'valor': 5.5,
-            'quantidade': 500,
-        }
+        response = self.class_services(data=self.data).create_produto_com_origem()
 
-        response = self.class_services(data=data).create_produto_com_origem()
-
-        origem = ProdutoOrigem.objects.filter(**data).exists()
-        produto = Produto.objects.filter(**data).exists()
+        origem = ProdutoOrigem.objects.filter(**self.data).exists()
+        produto = Produto.objects.filter(**self.data).exists()
 
         self.assertEqual(origem, produto)
         self.assertIsInstance(response, ReturnDict)
+
+    def test_editar_parcialmente_o_produto_e_produto_origem(self):
+        data = self.data.copy()
+
+        data_edit = data.copy()
+        data_edit.update({'nome':'liquido', 'valor': 30.5})
+
+        data.update({'categoria':self.categoria})
+        origem = ProdutoOrigemFactory(**data)
+        data.update({'categoria':self.categoria.pk})
+
+
+        serializer = ProdutoOrigemSerializer(origem, data=data_edit)
+        serializer.is_valid(raise_exception=True)
+
+        data.update({'categoria': self.categoria, 'origem': origem})
+        produto = ProdutoFactory(**data)
+        data.update({'categoria': self.categoria.pk, 'origem': origem.pk})
+
+        self.class_services(
+            data=data_edit,
+            serializer=serializer,
+            origem=origem.pk
+        ).update_partial_in_produto()
+
+        produto_edit = Produto.objects.filter(pk=produto.pk).first()
+
+        self.assertNotEqual(produto.nome, produto_edit.nome)
+        self.assertEqual(produto.valor, produto_edit.valor)
