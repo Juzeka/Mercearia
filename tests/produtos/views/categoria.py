@@ -10,6 +10,7 @@ from apps.produtos.factories import (
     CategoriaFactory,
 )
 from parameterized import parameterized
+from rest_framework.utils.serializer_helpers import ReturnDict
 
 
 QNTD_CATEGORIAS = [(5,), (10,), (100,),]
@@ -17,6 +18,7 @@ DATAS = [
     ({'nome': 'Frios', 'descricao': 'Setor de firos e congelados'},),
     ({'nome': 'Grãos', 'descricao': 'Setor de grãos'},),
 ]
+
 
 class CategoriaViewSetTestCase(TestCase):
     class_model = Categoria
@@ -43,6 +45,12 @@ class CategoriaViewSetTestCase(TestCase):
 
         self.assertEqual(response.status_code, HTTP_200_OK)
         self.assertEqual(qntd + 1, len(response.data))
+
+    def test_detalhe(self):
+        response = self.client.get(f'{self.class_router}{self.categoria.pk}/')
+
+        self.assertEqual(response.status_code, HTTP_200_OK)
+        self.assertIsInstance(response.data, ReturnDict)
 
     @parameterized.expand(DATAS)
     def test_editar(self, data):
