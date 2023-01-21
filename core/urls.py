@@ -3,6 +3,7 @@ from rest_framework.routers import SimpleRouter
 from apps.produtos.views import ProdutoViewSet, CategoriaViewSet
 from apps.financeiro.views import CaixaViewSet
 
+
 routers = SimpleRouter()
 
 routers.register(r'produtos', ProdutoViewSet, basename='produtos')
