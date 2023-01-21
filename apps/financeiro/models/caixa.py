@@ -1,5 +1,4 @@
 from utilities.models import models, CriadoAlteradoEm
-from django.contrib.auth.models import User
 
 
 class Caixa(CriadoAlteradoEm):
