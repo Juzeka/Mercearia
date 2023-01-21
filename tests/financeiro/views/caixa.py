@@ -46,6 +46,9 @@ class CaixaViewSetTestCase(TestCase):
     class_factory = CaixaFactory
     class_router = '/api/financeiro/caixas/'
 
+    def setUp(self):
+        self.data = {'size': 1, 'valor_inicial': 50.0}
+
     def criar_caixas(self, data):
         return self.class_factory.create_batch(**data)
 
@@ -86,9 +89,11 @@ class CaixaViewSetTestCase(TestCase):
         pk = 0
 
         if not error:
-            data = {'size': 1, 'valor_inicial': 50.0, 'aberto': aberto}
-            caixa = self.criar_caixas(data)
-            pk = caixa[0].pk
+            data = self.data.copy()
+            data.update({'aberto': aberto})
+
+            caixa = self.criar_caixas(data)[0]
+            pk = caixa.pk
 
         response = self.client.get(f'{self.class_router}{pk}/aberto/')
 
@@ -108,9 +113,11 @@ class CaixaViewSetTestCase(TestCase):
         pk = 0
 
         if not error:
-            data = {'size': 1, 'valor_inicial': 50.0, 'aberto': aberto}
-            caixa = self.criar_caixas(data)
-            pk = caixa[0].pk
+            data = self.data.copy()
+            data.update({'aberto': aberto})
+
+            caixa = self.criar_caixas(data)[0]
+            pk = caixa.pk
 
         response = self.client.get(f'{self.class_router}{pk}/')
 
@@ -128,7 +135,9 @@ class CaixaViewSetTestCase(TestCase):
         pk = 0
 
         if not error:
-            data = {'size': 1, 'valor_inicial': 20.0,'aberto': aberto}
+            data = self.data.copy()
+            data.update({'aberto': aberto})
+
             caixa = self.criar_caixas(data)[0]
 
             if has_vendas:
