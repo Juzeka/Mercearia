@@ -1,10 +1,10 @@
 from django.urls import path, include
-from rest_framework.routers import SimpleRouter
+from rest_framework.routers import DefaultRouter
 from apps.produtos.views import ProdutoViewSet, CategoriaViewSet
 from apps.financeiro.views import CaixaViewSet
 
 
-routers = SimpleRouter()
+routers = DefaultRouter()
 
 routers.register(r'produtos', ProdutoViewSet, basename='produtos')
 routers.register(r'categorias', CategoriaViewSet, basename='categorias')
