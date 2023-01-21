@@ -3,10 +3,10 @@ from django.contrib.auth.models import User
 
 
 class Caixa(CriadoAlteradoEm):
-    usuario = models.ForeignKey(
-        User,
-        on_delete=models.PROTECT,
-        verbose_name='Usuário'
+    valor_inicial = models.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+        verbose_name='Valor'
     )
     vendas = models.ManyToManyField(
         'financeiro.Venda',
@@ -33,7 +33,7 @@ class Caixa(CriadoAlteradoEm):
 
     @property
     def qntd_vendas(self):
-        return self.caixa_vendas.count()
+        ...
 
     @property
     def total(self):
