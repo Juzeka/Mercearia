@@ -7,7 +7,12 @@ class Venda(CriadoAlteradoEm):
     forma_pagamento = models.CharField(
         max_length=20,
         choices=FORMA_PAGAMENTO_CHOICES,
-        default='DI'
+        default='AB'
+    )
+    finalizada = models.BooleanField(
+        auto_created=True,
+        default=False,
+        verbose_name='Ativo'
     )
 
     def __str__(self):

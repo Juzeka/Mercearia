@@ -6,12 +6,12 @@ class CriadoAlteradoEm(models.Model):
         abstract = True
 
     criado_em = models.DateTimeField(
-        auto_now=True,
+        auto_now_add=True,
         editable=False,
         verbose_name='Criado em'
     )
     alterado_em = models.DateTimeField(
-        auto_now_add=True,
+        auto_now=True,
         editable=False,
         verbose_name='Alterado em'
     )

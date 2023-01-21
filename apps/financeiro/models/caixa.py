@@ -26,9 +26,14 @@ class Caixa(CriadoAlteradoEm):
         default=True,
         verbose_name='Aberto'
     )
+    fechado_em = models.DateTimeField(
+        auto_now_add=True,
+        editable=False,
+        verbose_name='Fechado em'
+    )
 
     def __str__(self):
-        return f'{self.usuario} - {self.criado_em}'
+        return f'{self.criado_em}'
 
     @property
     def qntd_vendas(self):
