@@ -6,6 +6,9 @@ from apps.produtos.models import Produto
 
 
 class ProdutoServices:
+    class_model = Produto
+    class_serializer = ProdutoSerializer
+
     def __init__(self, *args, **kwargs):
         self.data = kwargs.get('data')
         self.serializer = kwargs.get('serializer')
@@ -27,7 +30,7 @@ class ProdutoServices:
         data.update({'origem': origem.instance.pk})
         self.data = data
 
-        self.serializer = ProdutoSerializer
+        self.serializer = self.class_serializer
         self.serialize_and_save()
 
         return origem.data
@@ -37,12 +40,12 @@ class ProdutoServices:
         data = self.data.copy()
         data.pop('valor')
 
-        instance = Produto.objects.filter(origem=self.origem)
+        instance = self.class_model.objects.filter(origem=self.origem)
 
         if instance.exists():
             instance = instance.first()
 
-            produto = ProdutoSerializer(instance, data=data, partial=True)
+            produto = self.class_serializer(instance, data=data, partial=True)
             produto.is_valid(raise_exception=True)
 
             produto.save()
