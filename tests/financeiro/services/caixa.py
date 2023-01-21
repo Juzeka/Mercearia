@@ -21,6 +21,8 @@ ABERTO_MSG_STATUS = [
     (False, 'Não é possível ver caixa fechado.', True, HTTP_400_BAD_REQUEST,),
     (True, None, True, HTTP_200_OK,),
 ]
+
+
 class CaixaServicesTestCase(TestCase):
     class_model = Caixa
     class_serializer = CaixaSerializer
@@ -52,4 +54,3 @@ class CaixaServicesTestCase(TestCase):
             self.assertEqual(msg, result.data.get('msg'))
 
         self.assertEqual(result.status_code, status)
-
