@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="vhdcNku4tLCnj1_UNpPX" name="Página-1">
-        <mxGraphModel dx="238" dy="348" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="499" dy="314" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -55,19 +55,22 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="16" value="Venda (CriadoAlteradoEm)" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#1ba1e2;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontColor=#000000;strokeColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="487" y="248" width="147" height="104" as="geometry"/>
+                    <mxGeometry x="487" y="248" width="147" height="130" as="geometry"/>
                 </mxCell>
                 <mxCell id="20" value="qntd_produtos" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="16" vertex="1">
                     <mxGeometry y="26" width="147" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="24" value="total" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="16" vertex="1">
+                <mxCell id="71" value="finalizada" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" vertex="1" parent="16">
                     <mxGeometry y="52" width="147" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="19" value="forma_pagamento" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="16" vertex="1">
+                <mxCell id="24" value="total" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="16" vertex="1">
                     <mxGeometry y="78" width="147" height="26" as="geometry"/>
                 </mxCell>
+                <mxCell id="19" value="forma_pagamento" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="16" vertex="1">
+                    <mxGeometry y="104" width="147" height="26" as="geometry"/>
+                </mxCell>
                 <mxCell id="26" value="Caixa (CriadoAlteradoEm)" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#1ba1e2;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontColor=#000000;strokeColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="659" y="66" width="142" height="208" as="geometry"/>
+                    <mxGeometry x="659" y="66" width="142" height="234" as="geometry"/>
                 </mxCell>
                 <mxCell id="27" value="usuario" style="text;strokeColor=#000000;fillColor=#a20025;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="26" vertex="1">
                     <mxGeometry y="26" width="142" height="26" as="geometry"/>
@@ -81,14 +84,17 @@
                 <mxCell id="34" value="sangrias" style="text;strokeColor=#000000;fillColor=#a20025;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="26" vertex="1">
                     <mxGeometry y="104" width="142" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="69" value="valor_inicial" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" vertex="1" parent="26">
+                <mxCell id="69" value="valor_inicial" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="26" vertex="1">
                     <mxGeometry y="130" width="142" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="29" value="total" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="26" vertex="1">
+                <mxCell id="70" value="fechado_em" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" vertex="1" parent="26">
                     <mxGeometry y="156" width="142" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="30" value="aberto" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="26" vertex="1">
+                <mxCell id="29" value="total" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="26" vertex="1">
                     <mxGeometry y="182" width="142" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="aberto" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="26" vertex="1">
+                    <mxGeometry y="208" width="142" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="36" value="Sangria (CriadoAlteradoEm)" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#1ba1e2;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontColor=#000000;strokeColor=#000000;" parent="1" vertex="1">
                     <mxGeometry x="653" y="337" width="159" height="78" as="geometry"/>
