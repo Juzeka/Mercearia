@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="vhdcNku4tLCnj1_UNpPX" name="Página-1">
-        <mxGraphModel dx="164" dy="240" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="238" dy="348" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -45,7 +45,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="68" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;" edge="1" parent="1" source="16" target="67">
+                <mxCell id="68" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;" parent="1" source="16" target="67" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="559" y="226"/>
@@ -67,7 +67,7 @@
                     <mxGeometry y="78" width="147" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="26" value="Caixa (CriadoAlteradoEm)" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#1ba1e2;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontColor=#000000;strokeColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="659" y="66" width="142" height="182" as="geometry"/>
+                    <mxGeometry x="659" y="66" width="142" height="208" as="geometry"/>
                 </mxCell>
                 <mxCell id="27" value="usuario" style="text;strokeColor=#000000;fillColor=#a20025;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="26" vertex="1">
                     <mxGeometry y="26" width="142" height="26" as="geometry"/>
@@ -81,11 +81,14 @@
                 <mxCell id="34" value="sangrias" style="text;strokeColor=#000000;fillColor=#a20025;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="26" vertex="1">
                     <mxGeometry y="104" width="142" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="29" value="total" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="26" vertex="1">
+                <mxCell id="69" value="valor_inicial" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" vertex="1" parent="26">
                     <mxGeometry y="130" width="142" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="30" value="aberto" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="26" vertex="1">
+                <mxCell id="29" value="total" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="26" vertex="1">
                     <mxGeometry y="156" width="142" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="aberto" style="text;strokeColor=#000000;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="26" vertex="1">
+                    <mxGeometry y="182" width="142" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="36" value="Sangria (CriadoAlteradoEm)" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#1ba1e2;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontColor=#000000;strokeColor=#000000;" parent="1" vertex="1">
                     <mxGeometry x="653" y="337" width="159" height="78" as="geometry"/>
