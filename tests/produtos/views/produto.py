@@ -12,6 +12,7 @@ from apps.produtos.factories import (
     ProdutoOrigemFactory
 )
 from parameterized import parameterized
+from rest_framework.utils.serializer_helpers import ReturnDict
 
 
 DATA_IN_ERROR = [
@@ -93,6 +94,27 @@ class ProdutoViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST)
         self.assertEqual(data_error.get('msg'), msg)
 
+    @parameterized.expand(QNTD_PRODUTOS)
+    def test_listar_produtos(self, qntd_produtos, qntd):
+        origens = self.class_factory.create_batch(
+            size=qntd_produtos,
+            categoria=self.categoria,
+            quantidade=qntd
+        )
+
+        response = self.client.get(self.class_router)
+
+        self.assertEqual(response.status_code, HTTP_200_OK)
+        self.assertEqual(qntd_produtos,len(response.data))
+
+    def test_detalhe(self):
+        origem = self.class_factory(categoria=self.categoria)
+
+        response = self.client.get(f'{self.class_router}{origem.pk}/')
+
+        self.assertEqual(response.status_code, HTTP_200_OK)
+        self.assertIsInstance(response.data, ReturnDict)
+
     def test_editar_produto_origem_sem_alterar_valor_do_produto(self):
         data = self.data.copy()
 
@@ -141,16 +163,3 @@ class ProdutoViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, HTTP_204_NO_CONTENT)
         self.assertFalse(instance_origem.exists())
         self.assertTrue(instance_produto.exists())
-
-    @parameterized.expand(QNTD_PRODUTOS)
-    def test_listar_produtos(self, qntd_produtos, qntd):
-        origens = self.class_factory.create_batch(
-            size=qntd_produtos,
-            categoria=self.categoria,
-            quantidade=qntd
-        )
-
-        response = self.client.get(self.class_router)
-
-        self.assertEqual(response.status_code, HTTP_200_OK)
-        self.assertEqual(qntd_produtos,len(response.data))
