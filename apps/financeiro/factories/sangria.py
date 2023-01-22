@@ -6,3 +6,5 @@ from ..models import Sangria
 class SangriaFactory(DjangoModelFactory):
     class Meta:
         model = Sangria
+
+    descricao = Sequence(lambda n: 'Descriacao %d' % n)
