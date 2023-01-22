@@ -1,3 +1,5 @@
+{% load tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +13,15 @@
     >
     <title>Relatório C{{ caixa.pk }} &ndash; {{ caixa.criado_em |date:'d/m/y' }}</title>
     <style>
+        @page {
+            margin-top: 25px;
+            margin-left: 8px;
+            margin-right: 8px;
+            background-color: rgb(248, 248, 248);
+        }
         body{
-            font-size: 13px !important;
+            font-size: 10px !important;
+            font-family: Arial, Helvetica, sans-serif !important;
         }
         body, table{
             background-color: rgb(248, 248, 248);
@@ -29,20 +38,19 @@
 <body class="container">
     <section>
         <div class="row text-center">
-            <div class="col-12 mt-2">
-                <span style="font-size: 20px;">RELATÓRIO DIÁRIO DE FECHAMENTO DE CAIXA</span><br>
-                <span style="font-size: 18px;">MERCEARIA O TEM DE TUDO</span><br>
-                <span style="font-size: 16px;">AV. FULANO DE TAL, 2049, BAIRRINHO, TERESINA&ndash;PI</span><br>
-                <span style="font-size: 15px;">Data &ndash; <strong>13/02/2023</strong> | Abertura &ndash; <strong>08:30:10</strong> | Fechamento &ndash; <strong>18:30:03</strong></span>
+            <div class="col-12 mt-2 mb-4">
+                <span style="font-size: 18px !important;"><strong>RELATÓRIO DIÁRIO DE FECHAMENTO DE CAIXA</strong></span><br>
+                <span style="font-size: 15px !important;">MERCEARIA O TEM DE TUDO</span><br>
+                <span style="font-size: 14px !important;">AV. FULANO DE TAL, 2049, BAIRRINHO, TERESINA&ndash;PI</span><br>
+                <span style="font-size: 14px !important;">Data &ndash; <strong>13/02/2023</strong> | Abertura &ndash; <strong>08:30:10</strong> | Fechamento &ndash; <strong>18:30:03</strong></span>
             </div>
             <div class="col-12 mt-2">
-                <h4>GERAL</h4>
+                <h6>GERAL</h6>
                 <table class="table table-bordered">
                     <thead>
                         <tr class="table-secondary">
                             <th scope="col">Saldo inicial</th>
                             <th scope="col">Saldo final</th>
-                            <th scope="col">Saldo Sangrias</th>
                             <th scope="col">Qndt Sangrias</th>
                             <th scope="col">Qndt Vendas</th>
                             <th scope="col">Qndt Itens Vendidos</th>
@@ -50,12 +58,11 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th>{{ caixa.valor_inicial }}R$ 32,00</th>
+                            <th>{{ teste | parse_for_reais }}</th>
                             <th>{{ caixa.total }}R$ 32,00</th>
-                            <th>{{ caixa.valor_sangrias }}R$ 32,00</th>
-                            <th>{{ caixa.qntd_sangrias }}3</th>
-                            <th>{{ caixa.qntd_vendas }}12</th>
-                            <th>{{ caixa.qntd_itens_vendidos }}23</th>
+                            <th>{{ caixa.qntd_sangrias }}00003</th>
+                            <th>{{ caixa.qntd_vendas }}00012</th>
+                            <th>{{ caixa.qntd_itens_vendidos }}00023</th>
                         </tr>
                     </tbody>
                 </table>
@@ -66,7 +73,7 @@
     <section>
         <div class="row">
             <div class="col text-center">
-                <h4>SANGRIAS</h4>
+                <h6>SANGRIAS</h6>
                 <div class="row">
                     <div class="col-12">
                         <table class="table table-bordered" style="margin-bottom: 0;">
@@ -78,7 +85,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th>3</th>
+                                    <th>00003</th>
                                     <th>R$ 40,00</th>
                                 </tr>
                             </tbody>
@@ -110,54 +117,92 @@
     <section>
         <div class="row">
             <div class="col-12 text-center">
-                <h4>VENDAS</h4>
-            <table class="table table-bordered" style="margin-bottom: 0;">
-                <thead>
-                    <tr class="table-secondary">
-                        <th scope="col">ABERTA</th>
-                        <th scope="col">FINALIZADA</th>
-                        <th scope="col">PAGAMENTO</th>
-                        <th scope="col">QNTD. ITENS</th>
-                        <th scope="col">TOTAL</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>12:34:42</th>
-                        <th>12:36:21</th>
-                        <th>Dinheiro</th>
-                        <th>5</th>
-                        <th>R$ 40,00</th>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-bordered">
-                <thead>
-                    <tr class="table-secondary">
-                        <th scope="col">PRODUTO</th>
-                        <th scope="col">QUANTIDADE</th>
-                        <th scope="col">VALOR UND.</th>
-                        <th scope="col">TOTAL</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>Peito de frango(AVES)</th>
-                        <th>2</th>
-                        <th>R$ 32,00</th>
-                        <th>R$ 64,00</th>
-                    </tr>
-                    <tr>
-                        <th>Peito de frango(AVES)</th>
-                        <th>2</th>
-                        <th>R$ 32,00</th>
-                        <th>R$ 64,00</th>
-                    </tr>
-                </tbody>
-            </table>
+                <h6>VENDAS</h6>
+                <table class="table table-bordered" style="margin-bottom: 0;">
+                    <thead>
+                        <tr class="table-secondary">
+                            <th scope="col">ABERTA</th>
+                            <th scope="col">FINALIZADA</th>
+                            <th scope="col">PAGAMENTO</th>
+                            <th scope="col">QNTD. ITENS</th>
+                            <th scope="col">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>12:34:42</th>
+                            <th>12:36:21</th>
+                            <th>Dinheiro</th>
+                            <th>5</th>
+                            <th>R$ 40,00</th>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="table-secondary">
+                            <th scope="col">PRODUTO</th>
+                            <th scope="col">QNTD</th>
+                            <th scope="col">VALOR UND.</th>
+                            <th scope="col">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Peito de frango (AVES)</th>
+                            <th>00002</th>
+                            <th>R$ 32,00</th>
+                            <th>R$ 64,00</th>
+                        </tr>
+                        <tr>
+                            <th>Peito de frango (AVES)</th>
+                            <th>00002</th>
+                            <th>R$ 32,00</th>
+                            <th>R$ 64,00</th>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
 
+    <section class="mb-4">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h6>ESTOQUE</h6>
+                <table class="table table-bordered" style="margin-bottom: 0;">
+                    <thead>
+                        <tr class="table-secondary">
+                            <th scope="col">NOME</th>
+                            <th scope="col">DESCRIÇÃO</th>
+                            <th scope="col">VALOR</th>
+                            <th scope="col">QNTD</th>
+                            <th scope="col">QNTD VENDIDOS</th>
+                            <th scope="col">DISPONÍVEL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Sabão em pó asda sdas (Limpesa)</th>
+                            <th>Ideal para lavar e perfumar suas roupas.</th>
+                            <th>R$ 40,00</th>
+                            <th>00005</th>
+                            <th>00015</th>
+                            <th>Sim</th>
+                        </tr>
+                        <tr>
+                            <th>Sabão em pó asda sdas (Limpesa)</th>
+                            <th>Ideal para lavar e perfumar suas roupas.</th>
+                            <th>R$ 40,00</th>
+                            <th>00005</th>
+                            <th>00015</th>
+                            <th>Sim</th>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </section>
 </body>
 </html>
