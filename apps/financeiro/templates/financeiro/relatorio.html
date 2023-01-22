@@ -6,15 +6,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        crossorigin="anonymous"
-    >
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <title>Relatório C{{ caixa.pk }} &ndash; {{ caixa.criado_em |date:'d/m/y' }}</title>
     <style>
         @page {
-            margin-top: 25px;
+            margin-top: 15px;
             margin-left: 8px;
             margin-right: 8px;
             background-color: rgb(248, 248, 248);
@@ -36,33 +32,186 @@
     </style>
 </head>
 <body class="container">
-    <section>
+    <section class="mb-4">
         <div class="row text-center">
-            <div class="col-12 mt-2 mb-4">
+            <div class="col-12 mt-2 mb-3">
                 <span style="font-size: 18px !important;"><strong>RELATÓRIO DIÁRIO DE FECHAMENTO DE CAIXA</strong></span><br>
                 <span style="font-size: 15px !important;">MERCEARIA O TEM DE TUDO</span><br>
                 <span style="font-size: 14px !important;">AV. FULANO DE TAL, 2049, BAIRRINHO, TERESINA&ndash;PI</span><br>
-                <span style="font-size: 14px !important;">Data &ndash; <strong>13/02/2023</strong> | Abertura &ndash; <strong>08:30:10</strong> | Fechamento &ndash; <strong>18:30:03</strong></span>
+                <span style="font-size: 14px !important;">Data &ndash; <strong>{{ caixa.criado_em |date:'d/m/Y'}}</strong> | Abertura &ndash; <strong>{{ caixa.criado_em |date:'H:i:s'}}</strong> | Fechamento &ndash; <strong>{{ caixa.fechado_em |date:'H:i:s'}}</strong></span>
+            </div>
+            <div class="col-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th colspan="5">INFORMAÇÕES GERAIS</th>
+                        </tr>
+                        <tr class="table-secondary">
+                            <th scope="col">SALDO INICIAL</th>
+                            <th scope="col">SALDO FINAL</th>
+                            <th scope="col">SALDO SANGRIAS</th>
+                            <th scope="col">QNDT. VENDAS</th>
+                            <th scope="col">QNDT. PRODUTOS VENDIDOS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>{{ caixa.valor_inicial |parse_for_reais }}</th>
+                            <th>{{ caixa.total |parse_for_reais }}</th>
+                            <th>{{ caixa.total_sangrias |parse_for_reais }}</th>
+                            <th>{{ caixa.qntd_vendas |zeros_esquerda }}</th>
+                            <th>{{ caixa.qntd_itens_vendidos |zeros_esquerda }}</th>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="col-12 mt-2">
-                <h6>GERAL</h6>
                 <table class="table table-bordered">
                     <thead>
-                        <tr class="table-secondary">
-                            <th scope="col">Saldo inicial</th>
-                            <th scope="col">Saldo final</th>
-                            <th scope="col">Qndt Sangrias</th>
-                            <th scope="col">Qndt Vendas</th>
-                            <th scope="col">Qndt Itens Vendidos</th>
+                        <tr>
+                            <th colspan="5">INFORMAÇÕES DE VENDAS, SANGRIAS E ESTOQUE</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th>{{ teste | parse_for_reais }}</th>
-                            <th>{{ caixa.total }}R$ 32,00</th>
-                            <th>{{ caixa.qntd_sangrias }}00003</th>
-                            <th>{{ caixa.qntd_vendas }}00012</th>
-                            <th>{{ caixa.qntd_itens_vendidos }}00023</th>
+                        <tr>
+                            <td colspan="5">
+                                <table class="table table-bordered" style="margin-bottom: 0;">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">SANGRIAS</th>
+                                        </tr>
+                                        <tr class="table-secondary">
+                                            <th scope="col">QUANTIDADE</th>
+                                            <th scope="col">TOTAL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if caixa.sangrias %}
+                                        <tr>
+                                            <th>{{ caixa.qntd_sangrias |zeros_esquerda }}</th>
+                                            <th>{{ caixa.total_sangrias |parse_for_reais }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">
+                                                <table class="table table-sm table-bordered">
+                                                    <thead>
+                                                        <tr class="table-secondary">
+                                                            <th scope="col">SANGRIA</th>
+                                                            <th scope="col">VALOR</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for sangria in caixa.sangrias.all %}
+                                                            <tr>
+                                                                <th>{{ sangria.descricao }}</th>
+                                                                <th>{{ sangria.valor |parse_for_reais }}</th>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </th>
+                                        </tr>
+                                        {% else %}
+                                        <tr>
+                                            <td colspan="2">Não há sangrias registradas.</td>
+                                        </tr>
+                                        {% endif %}
+
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <table class="table table-bordered" style="margin-bottom: 0;">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="5">VENDAS</th>
+                                        </tr>
+                                        <tr class="table-secondary">
+                                            <th scope="col">ABERTA</th>
+                                            <th scope="col">FINALIZADA</th>
+                                            <th scope="col">PAGAMENTO</th>
+                                            <th scope="col">QNTD. ITENS</th>
+                                            <th scope="col">TOTAL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if caixa.vendas %}
+
+                                            {% for venda in caixa.vendas.all %}
+                                                <tr>
+                                                    <th>{{ venda.criado_em |date:'H:i'}}</th>
+                                                    <th>{{ venda.alterado_em |date:'H:i'}}</th>
+                                                    <th>{{ venda.get_forma_pagamento_display }}</th>
+                                                    <th>{{ venda.qntd_itens |zeros_esquerda }}</th>
+                                                    <th>{{ venda.total |parse_for_reais }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5">
+                                                        <table class="table table-sm table-bordered">
+                                                            <thead>
+                                                                <tr class="table-secondary">
+                                                                    <th scope="col">PRODUTO</th>
+                                                                    <th scope="col">QNTD.</th>
+                                                                    <th scope="col">VALOR UND.</th>
+                                                                    <th scope="col">TOTAL</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {% for item_venda in venda.item_venda_venda.all %}
+                                                                    <tr>
+                                                                        <th>{{ item_venda.produto.nome }}</th>
+                                                                        <th>{{ item_venda.quantidade |zeros_esquerda}}</th>
+                                                                        <th>{{ item_venda.produto.valor |parse_for_reais}}</th>
+                                                                        <th>{{ item_venda.total |parse_for_reais}}</th>
+                                                                    </tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                                <tr>
+                                                    <td colspan="5">Não há vendas registradas.</td>
+                                                </tr>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <table class="table table-bordered" style="margin-bottom: 0;">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="6">ESTOQUE</th>
+                                        </tr>
+                                        <tr class="table-secondary">
+                                            <th scope="col">NOME</th>
+                                            <th scope="col">DESCRIÇÃO</th>
+                                            <th scope="col">UNID.</th>
+                                            <th scope="col">QNTD</th>
+                                            <th scope="col">TOTAL</th>
+                                            <th scope="col">DISPONÍVEL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for produto in produtos %}
+                                            <tr>
+                                                <th>{{ produto.nome }} ({{ produto.categoria }})</th>
+                                                <th>{{ produto.descricao }}</th>
+                                                <th>{{ produto.valor |parse_for_reais }}</th>
+                                                <th>{{ produto.quantidade |zeros_esquerda }}</th>
+                                                <th>{{ produto.total_produto |parse_for_reais }}</th>
+                                                <th>{{ produto.ativo }}</th>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -70,139 +219,7 @@
         </div>
     </section>
 
-    <section>
-        <div class="row">
-            <div class="col text-center">
-                <h6>SANGRIAS</h6>
-                <div class="row">
-                    <div class="col-12">
-                        <table class="table table-bordered" style="margin-bottom: 0;">
-                            <thead>
-                                <tr class="table-secondary">
-                                    <th scope="col">QUANTIDADE</th>
-                                    <th scope="col">TOTAL</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>00003</th>
-                                    <th>R$ 40,00</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr class="table-secondary">
-                                    <th scope="col">DESCRIÇÃO</th>
-                                    <th scope="col">VALOR</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>Pagamento de fulano</th>
-                                    <th>R$ 64,00</th>
-                                </tr>
-                                <tr>
-                                    <th>Conta de água</th>
-                                    <th>R$ 64,00</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
-    <section>
-        <div class="row">
-            <div class="col-12 text-center">
-                <h6>VENDAS</h6>
-                <table class="table table-bordered" style="margin-bottom: 0;">
-                    <thead>
-                        <tr class="table-secondary">
-                            <th scope="col">ABERTA</th>
-                            <th scope="col">FINALIZADA</th>
-                            <th scope="col">PAGAMENTO</th>
-                            <th scope="col">QNTD. ITENS</th>
-                            <th scope="col">TOTAL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>12:34:42</th>
-                            <th>12:36:21</th>
-                            <th>Dinheiro</th>
-                            <th>5</th>
-                            <th>R$ 40,00</th>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr class="table-secondary">
-                            <th scope="col">PRODUTO</th>
-                            <th scope="col">QNTD</th>
-                            <th scope="col">VALOR UND.</th>
-                            <th scope="col">TOTAL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>Peito de frango (AVES)</th>
-                            <th>00002</th>
-                            <th>R$ 32,00</th>
-                            <th>R$ 64,00</th>
-                        </tr>
-                        <tr>
-                            <th>Peito de frango (AVES)</th>
-                            <th>00002</th>
-                            <th>R$ 32,00</th>
-                            <th>R$ 64,00</th>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <section class="mb-4">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h6>ESTOQUE</h6>
-                <table class="table table-bordered" style="margin-bottom: 0;">
-                    <thead>
-                        <tr class="table-secondary">
-                            <th scope="col">NOME</th>
-                            <th scope="col">DESCRIÇÃO</th>
-                            <th scope="col">VALOR</th>
-                            <th scope="col">QNTD</th>
-                            <th scope="col">QNTD VENDIDOS</th>
-                            <th scope="col">DISPONÍVEL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>Sabão em pó asda sdas (Limpesa)</th>
-                            <th>Ideal para lavar e perfumar suas roupas.</th>
-                            <th>R$ 40,00</th>
-                            <th>00005</th>
-                            <th>00015</th>
-                            <th>Sim</th>
-                        </tr>
-                        <tr>
-                            <th>Sabão em pó asda sdas (Limpesa)</th>
-                            <th>Ideal para lavar e perfumar suas roupas.</th>
-                            <th>R$ 40,00</th>
-                            <th>00005</th>
-                            <th>00015</th>
-                            <th>Sim</th>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
-        </div>
-    </section>
 </body>
 </html>
