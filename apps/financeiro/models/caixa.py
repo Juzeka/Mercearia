@@ -43,6 +43,7 @@ class Caixa(CriadoAlteradoEm):
 
     @property
     def total(self):
+        total = self.valor_inicial
         vendas = self.vendas.annotate(
             total_venda=models.ExpressionWrapper(
                 F('item_venda_venda__produto__valor') * F('item_venda_venda__quantidade'),
@@ -54,7 +55,7 @@ class Caixa(CriadoAlteradoEm):
         total_sangrias = self.total_sangrias
 
         if total_vendas:
-            total = self.valor_inicial + total_vendas
+            total = total + total_vendas
         if total_sangrias:
             total = total - total_sangrias
 

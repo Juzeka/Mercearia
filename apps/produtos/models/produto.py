@@ -1,5 +1,6 @@
 from utilities.models import models, CriadoAlteradoEm, NomeDescricao
 from utilities.validators import numero_positivo
+from django.db.models import Sum, F
 
 
 class ProdutoOrigem(CriadoAlteradoEm, NomeDescricao):
@@ -25,6 +26,10 @@ class ProdutoOrigem(CriadoAlteradoEm, NomeDescricao):
         default=True,
         verbose_name='Ativo'
     )
+
+    @property
+    def total_produto(self):
+        return self.quantidade * self.valor
 
 
 class Produto(ProdutoOrigem):
