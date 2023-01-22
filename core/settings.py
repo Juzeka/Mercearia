@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'utilities',
+    'utilities.templatetags',
 ]
 
 INSTALLED_APPS += [
