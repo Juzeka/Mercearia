@@ -15,7 +15,10 @@ def parse_for_reais(value:Decimal):
 
 @register.filter
 def zeros_esquerda(value):
-    value = str(value) if value != 0 else value
+    if value == 0:
+        return '00000'
+
+    value = str(value)
 
     if len(value) == 4:
         value = f'0{value}'
@@ -23,8 +26,6 @@ def zeros_esquerda(value):
         value = f'00{value}'
     elif len(value) == 2:
         value = f'000{value}'
-    elif len(value) == 1:
-        value = f'0000{value}'
     else:
         value = f'0000{value}'
 
