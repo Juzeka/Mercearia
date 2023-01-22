@@ -2,10 +2,10 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.views import Response
 from rest_framework.status import (
-    HTTP_200_OK,
     HTTP_400_BAD_REQUEST,
     HTTP_204_NO_CONTENT
 )
+from django.http.response import HttpResponse
 from apps.financeiro.models import Caixa
 from apps.financeiro.serializers import CaixaSerializer
 from apps.financeiro.services import CaixaServices
@@ -72,4 +72,22 @@ class CaixaViewSet(ModelViewSet):
 
         self.perform_update(serializer)
 
-        return Response(serializer.data)
+        return self.class_services(
+            request=request,
+            data=self.class_services(pk=kwargs.get('pk')).get_data_relatorio()
+        ).gerar_relatorio()
+
+    @action(methods=['get'], detail=True, url_path='relatorio_fechamento')
+    def get_relatorio_fechamento_html(self, request, *args, **kwargs):
+        return self.class_services(
+            request=request,
+            data=self.class_services(pk=kwargs.get('pk')).get_data_relatorio()
+        ).gerar_relatorio()
+
+    @action(methods=['get'], detail=True, url_path='relatorio_fechamento/pdf')
+    def get_relatorio_fechamento_pdf(self, request, *args, **kwargs):
+        relatorio = self.class_services(
+            data=self.class_services(pk=kwargs.get('pk')).get_data_relatorio()
+        ).relatorio_fechamento_pdf()
+
+        return HttpResponse(relatorio, content_type='application/pdf')

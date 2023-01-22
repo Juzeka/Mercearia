@@ -12,7 +12,9 @@ from apps.financeiro.factories import (
     VendaFactory,
     ItemVendaFactory
 )
+from apps.financeiro.services import CaixaServices
 from apps.produtos.factories import ProdutoFactory, CategoriaFactory
+from apps.produtos.models import ProdutoOrigem
 from parameterized import parameterized
 from rest_framework.utils.serializer_helpers import ReturnDict
 
@@ -39,11 +41,16 @@ ABERTO_VENDA_STATUS = [
     (False, True, HTTP_400_BAD_REQUEST, False),
     (None, None, HTTP_404_NOT_FOUND, True),
 ]
+CONTENT_TYPE_URL = [
+    ('application/pdf', '/relatorio_fechamento/pdf/',),
+    ('text/html; charset=utf-8', '/relatorio_fechamento/',),
+]
 
 
 class CaixaViewSetTestCase(TestCase):
     class_model = Caixa
     class_factory = CaixaFactory
+    class_services = CaixaServices
     class_router = '/api/financeiro/caixas/'
 
     def setUp(self):
@@ -170,13 +177,33 @@ class CaixaViewSetTestCase(TestCase):
             self.assertEqual('Não encontrado.', msg)
 
     def test_fechamento_caixa(self):
-        caixa = self.criar_caixas({
-            'size': 1,
-            'valor_inicial': 50.0,
-            'aberto': True
-        })[0]
+        data = self.data.copy()
+        data.update({'aberto': True})
+
+        caixa = self.criar_caixas(data)[0]
+
+        content_type = 'text/html; charset=utf-8'
+        template = self.class_services(
+            data={'caixa': caixa, 'produtos':ProdutoOrigem.objects.all()}
+        ).gerar_relatorio()
 
         response = self.client.patch(f'{self.class_router}{caixa.pk}/fechar/')
 
+        caixa_fechado = self.class_model.objects.get(pk=caixa.pk)
+
+        self.assertEqual(response.status_code, template.status_code)
+        self.assertEqual(response.content, template.content)
+        self.assertEqual(response.headers.get('Content-type'), content_type)
+        self.assertNotEqual(caixa.aberto, caixa_fechado.aberto)
+
+    @parameterized.expand(CONTENT_TYPE_URL)
+    def test_gerar_relatorio_fechamento(self, content_type, url):
+        data = self.data.copy()
+        data.update({'aberto': False})
+
+        caixa = self.criar_caixas(data)[0]
+
+        response = self.client.get(f'{self.class_router}{caixa.pk}{url}')
+
         self.assertEqual(response.status_code, HTTP_200_OK)
-        self.assertEqual(response.data.get('aberto'), False)
+        self.assertEqual(response.headers.get('Content-type'), content_type)
