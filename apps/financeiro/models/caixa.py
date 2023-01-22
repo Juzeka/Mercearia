@@ -1,4 +1,6 @@
 from utilities.models import models, CriadoAlteradoEm
+from django.db.models import Sum, F
+from decimal import Decimal
 
 
 class Caixa(CriadoAlteradoEm):
@@ -37,8 +39,37 @@ class Caixa(CriadoAlteradoEm):
 
     @property
     def qntd_vendas(self):
-        ...
+        return self.vendas.all().count()
 
     @property
     def total(self):
-        ...
+        vendas = self.vendas.annotate(
+            total_venda=models.ExpressionWrapper(
+                F('item_venda_venda__produto__valor') * F('item_venda_venda__quantidade'),
+                output_field=models.DecimalField()
+            )
+        )
+
+        total_vendas = vendas.aggregate(total=Sum('total_venda'))['total']
+        total_sangrias = self.total_sangrias
+
+        if total_vendas:
+            total = self.valor_inicial + total_vendas
+        if total_sangrias:
+            total = total - total_sangrias
+
+        return Decimal(total)
+
+    @property
+    def qntd_sangrias(self):
+        return self.sangrias.all().count()
+
+    @property
+    def qntd_itens_vendidos(self):
+        return self.vendas.aggregate(
+            qntd=Sum('item_venda_venda__quantidade')
+        )['qntd']
+
+    @property
+    def total_sangrias(self):
+        return self.sangrias.aggregate(total=Sum('valor'))['total']

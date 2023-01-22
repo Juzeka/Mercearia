@@ -1,6 +1,7 @@
 from utilities.models import models, CriadoAlteradoEm
 from utilities.choices import FORMA_PAGAMENTO_CHOICES
 from utilities.validators import numero_positivo
+from django.db.models import Sum, F
 
 
 class Venda(CriadoAlteradoEm):
@@ -12,19 +13,11 @@ class Venda(CriadoAlteradoEm):
     finalizada = models.BooleanField(
         auto_created=True,
         default=False,
-        verbose_name='Ativo'
+        verbose_name='Finalizada'
     )
 
     def __str__(self):
         return f'{self.criado_em}'
-
-    @property
-    def qntd_produtos(self):
-        ...
-
-    @property
-    def total(self):
-        ...
 
 
 class ItemVenda(CriadoAlteradoEm):
