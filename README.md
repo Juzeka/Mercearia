@@ -4,10 +4,10 @@
 API de gerenciamento de um pequeno mercadinho.
 
 ## Visualização com Swagger
-![Visualização](https://raw.githubusercontent.com/Juzeka/Mercearia/master/swagger.png?token=GHSAT0AAAAAABZ6NJEL5AUQAZNF5XGKVPCQY6OO4TA)
+![Visualização](https://github.com/Juzeka/Mercearia/blob/master/swagger.png?raw=true)
 ## Relacionamento
 
-![Relacionamento](https://raw.githubusercontent.com/Juzeka/Mercearia/master/relacionamento.png?token=GHSAT0AAAAAABZ6NJEL56VAMTTOOPC7UDAEY6OO5EA)
+![Relacionamento](https://github.com/Juzeka/Mercearia/blob/master/relacionamento.png?raw=true)
 
 
 ## Distribuição de pastas
@@ -16,11 +16,11 @@ API de gerenciamento de um pequeno mercadinho.
 - A nomeação dos arquivos seguem o mesmo nome do model.
 - O diretório tests seguem a mesma lógica de apps.
 
-![Relacionamento](https://raw.githubusercontent.com/Juzeka/Mercearia/master/ordenacao.png?token=GHSAT0AAAAAABZ6NJEK3LCZYYXWSA2SUSKUY6OPM4A)
+![Pastas](https://github.com/Juzeka/Mercearia/blob/master/ordenacao.png?raw=true)
 
 ## Folha do Relatório
 - Relatório diário de fechamento de caixa:
-![Visualização](https://raw.githubusercontent.com/Juzeka/Mercearia/master/relatorio.png?token=GHSAT0AAAAAABZ6NJELY4JUX4QO5JH2Q7IKY6OQAQA)
+![Visualização](https://github.com/Juzeka/Mercearia/blob/master/relatorio.png?raw=true)
 
 ## Dependências extras utilizadas
 
