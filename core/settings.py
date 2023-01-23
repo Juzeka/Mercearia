@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_spectacular',
     'rest_framework',
     'utilities',
     'utilities.templatetags',
@@ -90,8 +91,20 @@ AUTH_PASSWORD_VALIDATORS = [
 
 REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False,
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Mercearia - API',
+    'DESCRIPTION': '<h4>API desenvolvida para pequenos mercadinhos!</h4>',
+    'VERSION': '1.0.0',
+    'CONTACT': {
+        'name': 'Rafael Gomes de Almeida',
+        'url': 'https://github.com/Juzeka',
+        'email': 'rafaelgomesalmeida@hotmail.com'
+    },
+    'SERVE_INCLUDE_SCHEMA': False,
+}
 
 LANGUAGE_CODE = 'pt-ubr'
 
