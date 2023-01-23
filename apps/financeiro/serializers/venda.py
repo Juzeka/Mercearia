@@ -11,4 +11,3 @@ class VendaSerializer(serializers.ModelSerializer):
 class ItemVendaSerializer(VendaSerializer):
     class Meta(VendaSerializer.Meta):
         model = ItemVenda
-        depth = 2
