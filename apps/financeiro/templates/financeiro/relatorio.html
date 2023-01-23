@@ -199,16 +199,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for produto in produtos %}
+                                        {% if produtos %}
+                                            {% for produto in produtos %}
+                                                <tr>
+                                                    <th>{{ produto.nome }} ({{ produto.categoria }})</th>
+                                                    <th>{{ produto.descricao }}</th>
+                                                    <th>{{ produto.valor |parse_for_reais }}</th>
+                                                    <th>{{ produto.quantidade |zeros_esquerda }}</th>
+                                                    <th>{{ produto.total_produto |parse_for_reais }}</th>
+                                                    <th>{{ produto.ativo }}</th>
+                                                </tr>
+                                            {% endfor %}
+                                        {% else %}
                                             <tr>
-                                                <th>{{ produto.nome }} ({{ produto.categoria }})</th>
-                                                <th>{{ produto.descricao }}</th>
-                                                <th>{{ produto.valor |parse_for_reais }}</th>
-                                                <th>{{ produto.quantidade |zeros_esquerda }}</th>
-                                                <th>{{ produto.total_produto |parse_for_reais }}</th>
-                                                <th>{{ produto.ativo }}</th>
+                                                <td colspan="5">Não há produtos no estoque.</td>
                                             </tr>
-                                        {% endfor %}
+                                        {% endif %}
                                     </tbody>
                                 </table>
                             </td>
