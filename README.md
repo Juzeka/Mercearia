@@ -25,19 +25,19 @@ API de gerenciamento de um pequeno mercadinho.
 ## Dependências extras utilizadas
 
 ### Visualização dos endpoints
-- **DRF spectacular**
+- ![**DRF spectacular**](https://drf-spectacular.readthedocs.io/en/latest/readme.html#installation)
 ### API
-- **Django REST Framework**
-- **Python Decouple**
+- ![**Django REST Framework**](https://www.django-rest-framework.org/#installation)
+- ![**Python Decouple**](https://pypi.org/project/python-decouple/)
 ### Testes
-- **Parameterized**
-- **Django Factory Boy**
+- ![**Parameterized**](https://pypi.org/project/parameterized/)
+- ![**Django Factory Boy**](https://pypi.org/project/django-factory_boy/)
 ### Converter HTML em PDF
-- **Weasyprint**
+- ![**Weasyprint**](https://pypi.org/project/weasyprint/)
 ### Depuração
-- **IPython pdb**
+- ![**IPython pdb**](https://pypi.org/project/ipdb/)
 ### Estilização
-- **Bootstrap 5**
+- ![**Bootstrap 5**](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
 ###
 
 ## Instalação
