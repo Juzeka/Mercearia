@@ -25,19 +25,19 @@ API de gerenciamento de um pequeno mercadinho.
 ## Dependências extras utilizadas
 
 ### Visualização dos endpoints
-- ![**DRF spectacular**](https://drf-spectacular.readthedocs.io/en/latest/readme.html#installation)
+- [**DRF spectacular**](https://drf-spectacular.readthedocs.io/en/latest/readme.html#installation)
 ### API
-- ![**Django REST Framework**](https://www.django-rest-framework.org/#installation)
-- ![**Python Decouple**](https://pypi.org/project/python-decouple/)
+- [**Django REST Framework**](https://www.django-rest-framework.org/#installation)
+- [**Python Decouple**](https://pypi.org/project/python-decouple/)
 ### Testes
-- ![**Parameterized**](https://pypi.org/project/parameterized/)
-- ![**Django Factory Boy**](https://pypi.org/project/django-factory_boy/)
+- [**Parameterized**](https://pypi.org/project/parameterized/)
+- [**Django Factory Boy**](https://pypi.org/project/django-factory_boy/)
 ### Converter HTML em PDF
-- ![**Weasyprint**](https://pypi.org/project/weasyprint/)
+- [**Weasyprint**](https://pypi.org/project/weasyprint/)
 ### Depuração
-- ![**IPython pdb**](https://pypi.org/project/ipdb/)
+- [**IPython pdb**](https://pypi.org/project/ipdb/)
 ### Estilização
-- ![**Bootstrap 5**](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
+- [**Bootstrap 5**](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
 ###
 
 ## Instalação
