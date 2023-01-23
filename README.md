@@ -5,7 +5,6 @@ API de gerenciamento de um pequeno mercadinho.
 
 ## Visualização com Swagger
 ![Visualização](https://raw.githubusercontent.com/Juzeka/Mercearia/master/swagger.png?token=GHSAT0AAAAAABZ6NJEL5AUQAZNF5XGKVPCQY6OO4TA)
-
 ## Relacionamento
 
 ![Relacionamento](https://raw.githubusercontent.com/Juzeka/Mercearia/master/relacionamento.png?token=GHSAT0AAAAAABZ6NJEL56VAMTTOOPC7UDAEY6OO5EA)
@@ -19,6 +18,9 @@ API de gerenciamento de um pequeno mercadinho.
 
 ![Relacionamento](https://raw.githubusercontent.com/Juzeka/Mercearia/master/ordenacao.png?token=GHSAT0AAAAAABZ6NJEK3LCZYYXWSA2SUSKUY6OPM4A)
 
+## Folha do Relatório 
+- Relatório diário de fechamento de caixa:
+![Visualização](https://raw.githubusercontent.com/Juzeka/Mercearia/master/relatorio.png?token=GHSAT0AAAAAABZ6NJELY4JUX4QO5JH2Q7IKY6OQAQA)
 ## Dependências extras utilizadas
 
 ### Visualização dos endpoints
@@ -104,9 +106,4 @@ Para rodar os testes, rode o seguinte comando:
 ```bash
   python3 manage.py test tests
 ```
-
-
-## Autores
-
-- [@octokatherine](https://www.github.com/octokatherine)
-
+### Criar um caixa com vendas e sangrias
