@@ -47,7 +47,7 @@ class VendaViewSetTestCase(TestCase):
     @parameterized.expand([
         (5, 4, True, HTTP_201_CREATED),
         (5, 6, True, HTTP_400_BAD_REQUEST),
-        (5, 4, False, HTTP_404_NOT_FOUND),
+        (5, 5, False, HTTP_404_NOT_FOUND),
     ])
     def test_criar_e_associar_item_de_venda(self, estoque, qntd, has_produto, status):
         condicao = estoque > qntd
@@ -58,7 +58,7 @@ class VendaViewSetTestCase(TestCase):
         data = {
             'venda': venda.pk,
             'quantidade': qntd,
-            'produto_origem': None
+            'produto_origem': False
         }
 
         if has_produto:
@@ -91,8 +91,7 @@ class VendaViewSetTestCase(TestCase):
         }
 
         if condicao and has_produto:
+            self.assertEqual(response.status_code, status)
             self.assertEqual(data, expected)
-        if not condicao or not has_produto:
+        if (not condicao or not has_produto) or not condicao:
             self.assertEqual(response.data.get('msg'), msg)
-
-        self.assertEqual(response.status_code, status)

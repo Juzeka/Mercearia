@@ -8,6 +8,7 @@ from rest_framework.status import (
 from rest_framework.decorators import action
 from apps.financeiro.models import Venda, ItemVenda
 from apps.financeiro.serializers import VendaSerializer, ItemVendaSerializer
+from apps.financeiro.services import VendaServices
 from apps.produtos.models import ProdutoOrigem, Produto
 from apps.produtos.serializers import ProdutoOrigemSerializer
 from django.shortcuts import get_object_or_404
@@ -17,25 +18,24 @@ from decimal import Decimal
 class VendaViewSet(ModelViewSet):
     serializer_class = VendaSerializer
     class_model = Venda
+    class_services = VendaServices
 
     def get_queryset(self):
         return self.class_model.objects.filter(finalizada=True)
+    # listar o ProdutoOrigem quando criar o endpoint
 
     @action(methods=['put'], detail=True, url_path='criar_item_venda')
     def criar_item_para_venda(self, request, *args, **kwargs):
         error = {'msg': 'Produto não existe no sistema.'}
         data = request.data.copy()
 
-        quantidade = data.get('quantidade')
+        services = self.class_services(data=request.data.copy())
 
-        origem = ProdutoOrigem.objects.filter(pk=data.get('produto_origem'))
-
-        if not origem.exists():
+        if not services.nao_existe_produto_origem():
             return Response(error, status=HTTP_404_NOT_FOUND)
 
-        produto = Produto.objects.filter(origem=origem.first().pk)
-        produto = produto.first()
-        has_quantidade = produto.quantidade - quantidade
+        produto = services.get_produto()
+        has_quantidade = services.verificar_quantidade(produto)
 
         if has_quantidade >= 0:
             data.pop('produto_origem')
@@ -45,19 +45,7 @@ class VendaViewSet(ModelViewSet):
 
             self.perform_create(item_venda)
 
-            data_produto = {'quantidade': has_quantidade}
-
-            if has_quantidade == 0:
-                data_produto.update({'ativo': False})
-
-            produto_serializer = ProdutoOrigemSerializer(
-                produto,
-                data=data_produto,
-                partial=True
-            )
-            produto_serializer.is_valid(raise_exception=True)
-
-            self.perform_update(produto_serializer)
+            services.atualizar_estoque(produto)
 
             headers = self.get_success_headers(item_venda.data)
 
