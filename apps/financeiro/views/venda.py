@@ -89,3 +89,18 @@ class VendaViewSet(ModelViewSet):
         self.perform_destroy(instance)
 
         return Response(status=HTTP_204_NO_CONTENT)
+
+    @action(methods=['put'], detail=True, url_path='concluir_venda')
+    def concluir_venda(self, request, *args, **kwargs):
+        instance = self.class_model.objects.get(pk=kwargs.get('pk'))
+
+        serializer = self.serializer_class(
+            instance,
+            data=request.data,
+            partial=True
+        )
+        serializer.is_valid(raise_exception=True)
+
+        self.perform_update(serializer)
+
+        return Response(serializer.data)

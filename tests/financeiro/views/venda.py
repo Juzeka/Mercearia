@@ -180,3 +180,23 @@ class VendaViewSetTestCase(TestCase):
         )
 
         self.assertEqual(response.status_code, HTTP_204_NO_CONTENT)
+
+    def test_concluir_venda(self):
+        venda = self.class_factory(**self.data)
+        data = {
+            'finalizada': True,
+            'forma_pagamento': FORMA_PAGAMENTO_CHOICES[1][0]
+        }
+        response = self.client.put(
+            f'{self.class_router}{venda.pk}/concluir_venda/',
+            data=data,
+            content_type='application/json'
+        )
+
+        expected = {
+            'finalizada': response.data.get('finalizada'),
+            'forma_pagamento': response.data.get('forma_pagamento')
+        }
+
+        self.assertEqual(response.status_code, HTTP_200_OK)
+        self.assertEqual(expected, data)
