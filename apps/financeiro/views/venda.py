@@ -13,6 +13,7 @@ from apps.produtos.models import ProdutoOrigem, Produto
 from apps.produtos.serializers import ProdutoOrigemSerializer
 from django.shortcuts import get_object_or_404
 from decimal import Decimal
+from apps.utilities.choices import FORMA_PAGAMENTO_CHOICES
 
 
 class VendaViewSet(ModelViewSet):
@@ -21,8 +22,21 @@ class VendaViewSet(ModelViewSet):
     class_services = VendaServices
 
     def get_queryset(self):
-        return self.class_model.objects.filter(finalizada=True)
-    # listar o ProdutoOrigem quando criar o endpoint
+        return self.class_model.objects.filter(
+            finalizada=True,
+            forma_pagamento__in=[
+                FORMA_PAGAMENTO_CHOICES[1][0],
+                FORMA_PAGAMENTO_CHOICES[2][0],
+                FORMA_PAGAMENTO_CHOICES[3][0]
+            ]
+        )
+
+    @action(methods=['get'], detail=True, url_path='itens_venda')
+    def get_listar_itens_venda(self, request, *args, **kwargs):
+        queryset = ItemVenda.objects.filter(venda=kwargs.get('pk'))
+        serializer = ItemVendaSerializer(queryset, many=True)
+
+        return Response(serializer.data)
 
     @action(methods=['put'], detail=True, url_path='criar_item_venda')
     def criar_item_para_venda(self, request, *args, **kwargs):
@@ -59,3 +73,14 @@ class VendaViewSet(ModelViewSet):
             data={'msg': 'Quantidade insufíciente no estoque.'},
             status=HTTP_400_BAD_REQUEST
         )
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+
+        if instance.item_venda_venda.all().exists():
+            return Response(
+                {'msg': 'Impossível excluir venda com itens vinculados a ela.'},
+                HTTP_400_BAD_REQUEST
+            )
+
+        return super().destroy(request, *args, **kwargs)
