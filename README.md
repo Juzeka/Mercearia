@@ -18,9 +18,10 @@ API de gerenciamento de um pequeno mercadinho.
 
 ![Relacionamento](https://raw.githubusercontent.com/Juzeka/Mercearia/master/ordenacao.png?token=GHSAT0AAAAAABZ6NJEK3LCZYYXWSA2SUSKUY6OPM4A)
 
-## Folha do Relatório 
+## Folha do Relatório
 - Relatório diário de fechamento de caixa:
 ![Visualização](https://raw.githubusercontent.com/Juzeka/Mercearia/master/relatorio.png?token=GHSAT0AAAAAABZ6NJELY4JUX4QO5JH2Q7IKY6OQAQA)
+
 ## Dependências extras utilizadas
 
 ### Visualização dos endpoints
@@ -35,6 +36,8 @@ API de gerenciamento de um pequeno mercadinho.
 - **Weasyprint**
 ### Depuração
 - **IPython pdb**
+### Estilização
+- **Bootstrap 5**
 ###
 
 ## Instalação
@@ -68,7 +71,7 @@ Crie um arquivo .env na pasta do projeto (onde o arquivo manage.py se encontra) 
 python3 manage.py shell
 ```
 
-- Entre com:    
+- Entre com:
 ```bash
 from django.core.management.utils import get_random_secret_key
 
