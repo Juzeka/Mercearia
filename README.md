@@ -46,7 +46,7 @@ Para a Instalação execute os seguintes comandos no terminal.
 
 - Clone o projeto em:
 ```bash
-https://github.com/Juzeka/Mercearia.git
+git clone https://github.com/Juzeka/Mercearia.git
 ```
 Na pasta do projeto:
 - Criação do ambiente virtual:
@@ -68,7 +68,7 @@ Crie um arquivo .env na pasta do projeto (onde o arquivo manage.py se encontra) 
 
 - Execute o comando:
 ```bash
-python3 manage.py shell
+python3
 ```
 
 - Entre com:
@@ -92,11 +92,7 @@ python3 manage.py makemigrations
 ```
 - Rode as migrations:
 ```bash
-python3 manage.py migrations
-```
-- Instalação das dependências:
-```bash
-pip install -r requirements.txt
+python3 manage.py migrate
 ```
 - Rode o servidor:
 ```bash
@@ -110,3 +106,6 @@ Para rodar os testes, rode o seguinte comando:
   python3 manage.py test tests
 ```
 ### Criar um caixa com vendas e sangrias
+```bash
+  python3 manage.py criar_caixa_com_vendas_e_sangrias
+```
