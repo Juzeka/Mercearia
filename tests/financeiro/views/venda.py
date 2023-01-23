@@ -8,7 +8,6 @@ from rest_framework.status import (
 )
 from apps.financeiro.models import Venda
 from apps.financeiro.factories import (
-    CaixaFactory,
     ItemVendaFactory,
     VendaFactory,
 )
@@ -135,6 +134,17 @@ class VendaViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, HTTP_200_OK)
         self.assertEqual(qntd, len(response.data))
 
+    def test_detalhe(self):
+        venda = self.class_factory(**{
+            'finalizada': True,
+            'forma_pagamento': FORMA_PAGAMENTO_CHOICES[1][0]
+        })
+
+        response = self.client.get(f'{self.class_router}{venda.pk}/')
+
+        self.assertEqual(response.status_code, HTTP_200_OK)
+        self.assertIsInstance(response.data, ReturnDict)
+
     @parameterized.expand(ITENS_STATUS)
     def test_excluir(self, has_itens, status):
         venda = self.class_factory(**{
@@ -154,3 +164,19 @@ class VendaViewSetTestCase(TestCase):
         )
 
         self.assertEqual(response.status_code, status)
+
+    def test_excluir_item(self):
+        item = ItemVendaFactory(
+            venda=self.class_factory(**{
+                'finalizada': True,
+                'forma_pagamento': FORMA_PAGAMENTO_CHOICES[1][0]
+            }),
+            produto=ProdutoFactory(categoria=CategoriaFactory()),
+            quantidade=3
+        )
+
+        response = self.client.delete(
+            f'{self.class_router}{item.pk}/excluir_item/'
+        )
+
+        self.assertEqual(response.status_code, HTTP_204_NO_CONTENT)

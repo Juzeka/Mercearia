@@ -2,6 +2,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import Response
 from rest_framework.status import (
     HTTP_201_CREATED,
+    HTTP_204_NO_CONTENT,
     HTTP_400_BAD_REQUEST,
     HTTP_404_NOT_FOUND
 )
@@ -9,10 +10,6 @@ from rest_framework.decorators import action
 from apps.financeiro.models import Venda, ItemVenda
 from apps.financeiro.serializers import VendaSerializer, ItemVendaSerializer
 from apps.financeiro.services import VendaServices
-from apps.produtos.models import ProdutoOrigem, Produto
-from apps.produtos.serializers import ProdutoOrigemSerializer
-from django.shortcuts import get_object_or_404
-from decimal import Decimal
 from apps.utilities.choices import FORMA_PAGAMENTO_CHOICES
 
 
@@ -84,3 +81,11 @@ class VendaViewSet(ModelViewSet):
             )
 
         return super().destroy(request, *args, **kwargs)
+
+    @action(methods=['delete'], detail=True, url_path='excluir_item')
+    def excuilr_item(self, request, *args, **kwargs):
+        instance = ItemVenda.objects.get(pk=kwargs.get('pk'))
+
+        self.perform_destroy(instance)
+
+        return Response(status=HTTP_204_NO_CONTENT)
