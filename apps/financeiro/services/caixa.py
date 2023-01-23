@@ -5,7 +5,7 @@ from django.template.loader import get_template
 from django.shortcuts import get_object_or_404
 from weasyprint import HTML
 from apps.financeiro.models import Caixa
-from apps.produtos.models import ProdutoOrigem
+from apps.produtos.models import ProdutoOrigem, Produto
 
 
 class CaixaServices:
@@ -26,13 +26,16 @@ class CaixaServices:
         return Response(self.serializer.data)
 
     def get_data_relatorio(self):
+        produtos = Produto.objects.all().values('pk')
+        pks_excludes = [i.get('pk') for i in produtos]
+
         return {
             'caixa': get_object_or_404(
                 self.class_model,
                 pk=self.pk,
                 aberto=False
             ),
-            'produtos': ProdutoOrigem.objects.all()
+            'produtos': ProdutoOrigem.objects.all().exclude(pk__in=pks_excludes)
         }
 
     def gerar_relatorio(self):
